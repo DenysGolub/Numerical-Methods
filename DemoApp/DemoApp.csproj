@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UnlinearEquations\UnlinearEquations.csproj" />
+    <ProjectReference Include="..\NumericalMethods\NumericalMethods.csproj" />
   </ItemGroup>
 
 </Project>

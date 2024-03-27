@@ -1,0 +1,39 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns:dataGrid2D="http://gu.se/DataGrid2D"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1" 
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Розв'язання систем лінійних алгебраїчних рівнянь" Height="450" Width="800" SizeToContent="WidthAndHeight">
+    <Grid Height="450" Width="800">
+        <DataGrid x:Name="matrix" dataGrid2D:ItemsSource.Array2D="{Binding Data2D}"
+  dataGrid2D:ItemsSource.ColumnHeadersSource="{Binding ColumnHeaders}"
+                  Margin="14,20,425,143" RenderTransformOrigin="0.5,0.5"
+                  SelectionUnit="Cell">
+            <DataGrid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.74"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </DataGrid.RenderTransform>
+        </DataGrid>
+        <xctk:IntegerUpDown Value="1" Minimum="1" ValueChanged="myUpDownControl_ValueChanged" Name="myUpDownControl" Margin="495,19,231,405" RenderTransformOrigin="-2.861,-2.161" />
+        <Button Content="Розв'язати СЛАР" Click="Button_Click" Margin="544,88,162,332"></Button>
+        <TextBox VerticalScrollBarVisibility="Auto" x:Name="coreni" HorizontalAlignment="Left" Margin="426,133,0,0" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Top" Height="146" Width="330"/>
+        <TextBox VerticalScrollBarVisibility="Auto" x:Name="approx" HorizontalAlignment="Left" Margin="427,297,0,0" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Top" Height="112" Width="329"/>
+        <TextBox HorizontalAlignment="Left" Name="Eps" Margin="658,17,0,0" TextWrapping="Wrap" Text="0.01" VerticalAlignment="Top" Width="76" Height="28"/>
+        <Label Content="Кількість змінних" HorizontalAlignment="Left" Margin="386,19,0,0" VerticalAlignment="Top" Height="26"/>
+        <Label Content="Точність" HorizontalAlignment="Left" Margin="597,17,0,0" VerticalAlignment="Top" Height="26"/>
+        <Label  Content="Перевірка розв'язання" HorizontalAlignment="Left" Margin="284,335,0,0" VerticalAlignment="Top" Height="26"/>
+        <RadioButton IsChecked="True" x:Name="SI" Content="Прості ітерації" HorizontalAlignment="Left" Margin="386,56,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="Zeidel" Content="Зейдель" HorizontalAlignment="Left" Margin="506,56,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="LU" Content="LU-розклад" HorizontalAlignment="Left" Margin="597,56,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="Relaxation" Content="Релаксація" HorizontalAlignment="Left" Margin="696,56,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

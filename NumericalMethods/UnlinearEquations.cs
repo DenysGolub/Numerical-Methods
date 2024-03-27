@@ -1,22 +1,44 @@
-﻿using NCalc;
+﻿using Antlr4.Runtime.Misc;
+using NCalc;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Transactions;
 using Expression = NCalc.Expression;
-namespace UnlinearEquations
+namespace NumericalMethods
 {
-    public class Solver
+    /// <summary>
+    /// Class that solves unlinear equations (F(x)=0)
+    /// </summary>
+    public class UnlinearEquations
     {
         public delegate double FunctionDelegate(double x);
 
-        double accuracy = 0.000000000000001;
+        const double max_accuracy = 0.000000000000001;
+        double accuracy = 0.01;
 
         string function_expression_string = "";
 
-        FunctionDelegate function_delegate = null;
+        FunctionDelegate function_delegate;
       
-        public double Epsilon { get { return accuracy; } set { accuracy = value; } }
+        public double Epsilon 
+        { 
+            get 
+            { 
+                return accuracy;
+            } 
+            set 
+            {
+                if (value >= max_accuracy)
+                {
+                    accuracy = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Максимальна точність, яку можна встановити дорівнює 0.000000000000001");
+                }
+            }
+        }
 
         public string Function
         {
@@ -28,9 +50,14 @@ namespace UnlinearEquations
                     var x_string = x.ToString().Replace(',','.');
                     var n = function_expression_string.Replace("x", x_string);
                     var eval = new Expression(n).Evaluate();
-                    return double.Parse(eval.ToString());
+                    return Math.Round(double.Parse(eval.ToString()),6);
                 };
             }
+        }
+
+        public double FunctionEval(double x)
+        {
+            return function_delegate(x);
         }
 
         public List<double> Chord(double a, double b)
@@ -50,6 +77,9 @@ namespace UnlinearEquations
 
                 if (function_delegate(a) * function_delegate(b) < 0 && !InfinityCheck(function_delegate(a), function_delegate(b)))
                 {
+                    //Console.WriteLine(String.Format("|{0,5}|{1,8}|{2,8}|{3,8}|{4,8}|{5,8}|{6,8}", "iter", "a", "f(a)", "b", "f(b)", "x", "f(x)"));
+
+                    int iter = 1;
                     while (true)
                     {
                         double fa = function_delegate(a);
@@ -58,8 +88,11 @@ namespace UnlinearEquations
                         double c2 = a - ((fa * (a - b)) / (fa - fb));
                         double fc = function_delegate(c2);
 
-                        if (Math.Abs(c1 - c2) < accuracy)
+                        //Console.WriteLine(String.Format("|{0,5}|{1,8}|{2,8}|{3,8}|{4,8}|{5,8}|{6,8}", iter++, Math.Round(a, 5), fa,Math.Round(b, 5),fb, Math.Round(c2, 5), Math.Round(fc, 5)));
+
+                        if (Math.Abs(c1-c2) < accuracy) //c1-c2
                         {
+                           // Console.WriteLine("----");
                             solution = true;
                             corin = c2;
                             break;
@@ -179,26 +212,6 @@ namespace UnlinearEquations
             return solutions;
         }
 
-        private double Dx(double a, double b)
-        {
-            double dx = int.MinValue;
-            double step = Math.Abs((a - b) / 10);
-            for (double x=a; x <= b; x += step)
-            {
-                double temp = (function_delegate(x + 0.001) - function_delegate(x)) / 0.001;
-                if (temp > dx)
-                {
-                    dx = temp;
-                }
-            }
-            return dx;
-        }
-
-        private double Dx(double x)
-        {
-            return (function_delegate(x + 0.0001) - function_delegate(x)) / 0.0001;
-        }
-
         public List<double> PartFraction(double a, double b)
         {
             var intervals = SeparateSolutions(a, b);
@@ -215,6 +228,9 @@ namespace UnlinearEquations
 
                 if (function_delegate(a) * function_delegate(b) < 0 && !InfinityCheck(function_delegate(a), function_delegate(b)))
                 {
+                    Console.WriteLine(String.Format("|{0,5}|{1,8}|{2,8}|{3,8}|{4,8}|{5,8}|{6,8}|{7,8}", "iter", "a", "f(a)", "b", "f(b)", "c", "f(c)", "|a-b|"));
+
+                    int iter = 1;
                     while (true)
                     {
                         corin = (a + b) / 2.0;
@@ -222,13 +238,16 @@ namespace UnlinearEquations
                         double b_values = function_delegate(b);
                         double c_values = function_delegate(corin);
 
-                        if (Math.Abs(a-b) < 2*accuracy)
+                        Console.WriteLine(String.Format("|{0,5}|{1,8}|{2,8}|{3,8}|{4,8}|{5,8}|{6,8}|{7,8}",iter++,Math.Round(a,5), Math.Round(a_values,5), Math.Round(b,5), Math.Round(b_values, 5), Math.Round(corin,5), Math.Round(c_values,5), (Math.Abs(a-b))));
+                        if (Math.Abs(a - b) <  accuracy) //dont forget to back 2*e<accuracy!
                         {
                             solution = true;
+                            Console.WriteLine("-----");
                             break;
+
                         }
 
-                        if (a_values * c_values < 0)
+                        if (a_values * c_values < 0) 
                         {
                             b = corin;
                         }
@@ -238,7 +257,6 @@ namespace UnlinearEquations
                         }
                     }
                 }
-
                 IsSolution(solution, ref solutions, intervals, list_number, corin);
 
                 list_number++;
@@ -267,24 +285,23 @@ namespace UnlinearEquations
 
                 if (function_delegate(a) * function_delegate(b) < 0 && !InfinityCheck(function_delegate(a), function_delegate(b)))
                 {
-                    double x_prev = 0;
+                    double x_prev = b + 0.1;
                     double x_curr = b;
                     double temp = 0;
 
                     while (true)
                     {
-                        x_prev = x_curr;
-
 
                         double x_next = x_curr - (function_delegate(x_curr) * (x_curr - x_prev)) / (function_delegate(x_curr) - function_delegate(x_prev));
 
 
-                        if (Math.Abs(x_curr-x_prev) < accuracy)
+                        if (Math.Abs(x_curr - x_prev) < accuracy)
                         {
                             corin = x_curr;
                             solution = true;
                             break;
                         }
+                        x_prev = x_curr;
 
                         x_curr = x_next;
 
@@ -305,15 +322,35 @@ namespace UnlinearEquations
             return solutions;
         }
 
+        private double Dx(double a, double b)
+        {
+            double dx = int.MinValue;
+            double step = Math.Abs((a - b) / 10);
+            for (double x=a; x <= b; x += step)
+            {
+                double temp = (function_delegate(x + 0.001) - function_delegate(x)) / 0.001;
+                if (temp > dx)
+                {
+                    dx = temp;
+                }
+            }
+            return dx;
+        }
+
+        private double Dx(double x)
+        {
+            return (function_delegate(x + 0.0001) - function_delegate(x)) / 0.0001;
+        }
+
         private Dictionary<double, double> SeparateSolutions(double a, double b)
         {
-            double step = Math.Round(Math.Abs(b - a) / 300.0, 5); //300 all ok
+            double step = Math.Round(Math.Abs(b - a) / 300.0, 6); //300 all ok, dont forget to back to 300 after RGR!
 
             Dictionary<double, double> list = new Dictionary<double, double>();
 
-            for (double i = a; i <= b; i = Math.Round(i += step, 5))
+            for (double i = a; i <= b; i += step)
             {
-                list.Add(Math.Round(i, 3), Math.Round(function_delegate(i), 3));
+                list.Add(Math.Round(i,6), (Math.Round(function_delegate(i),6)));
             }
 
             return list;
