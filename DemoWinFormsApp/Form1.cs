@@ -52,14 +52,14 @@ namespace DemoWinFormsApp
         private void button1_Click(object sender, EventArgs e)
         {
             formsPlot1.Plot.Clear();
-            formsPlot1.Plot.Add.HorizontalLine(0);
-            formsPlot1.Plot.Add.VerticalLine(0);
+            formsPlot1.Plot.Add.HorizontalLine(0, color: ScottPlot.Color.FromHex("#000000"));
+            formsPlot1.Plot.Add.VerticalLine(0, color: ScottPlot.Color.FromHex("#000000"));
             ueq.Function = function_text.Text;
 
             double a = double.Parse(a_interval.Text);
             double b = double.Parse(b_interval.Text);
 
-            GetXYArrays(ueq.FunctionEval, a,b, out double[] data_x, out double[] data_y);
+            GetXYArrays(ueq.FunctionEval, a, b, out double[] data_x, out double[] data_y);
             ScottPlot.Plottables.Scatter MyScatter = formsPlot1.Plot.Add.Scatter(data_x, data_y);
             MyScatter.LineWidth = 2;
 
@@ -67,33 +67,38 @@ namespace DemoWinFormsApp
 
             List<double> solutions = null;
 
-            if(radioChord.Checked)
+            if (radioChord.Checked)
             {
                 solutions = ueq.Chord(a, b);
             }
-            else if(radioNewton.Checked)
+            else if (radioNewton.Checked)
             {
-                solutions= ueq.Newton(a, b);
+                solutions = ueq.Newton(a, b);
             }
-            else if(radioPF.Checked)
+            else if (radioPF.Checked)
             {
                 solutions = ueq.PartFraction(a, b);
             }
-            else if(radioSecant.Checked)
+            else if (radioSecant.Checked)
             {
-                solutions= ueq.Secant(a, b);
+                solutions = ueq.Secant(a, b);
             }
-            else if(radioSI.Checked)
+            else if (radioSI.Checked)
             {
-                solutions=ueq.SimpleIteration(a, b);
+                solutions = ueq.SimpleIteration(a, b);
             }
 
             answers.Clear();
 
-            foreach(var k in solutions)
+            foreach (var k in solutions)
             {
                 answers.Text += k.ToString() + "\n";
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NumericalMethods", "Numeric
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnlinearEquationsDemo", "DemoWinFormsApp\UnlinearEquationsDemo.csproj", "{EFD43686-F552-4001-82EB-8C58E7892BDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnlinearEquationsSystemsDemo", "UnlinearEquationsSystemsDemo\UnlinearEquationsSystemsDemo.csproj", "{12A33B66-0E5D-4747-BC4C-25876F36A3E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnlinearEquationsSystemsDemo", "UnlinearEquationsSystemsDemo\UnlinearEquationsSystemsDemo.csproj", "{12A33B66-0E5D-4747-BC4C-25876F36A3E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearSystemsDemo", "LinearSystemsDemo\LinearSystemsDemo.csproj", "{B137E4EB-CF2D-4A1C-8C3E-F1EF53F0558A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinearSystemsDemo", "LinearSystemsDemo\LinearSystemsDemo.csproj", "{B137E4EB-CF2D-4A1C-8C3E-F1EF53F0558A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InterpolationDemo", "InterpolationDemo\InterpolationDemo.csproj", "{2FE34B1F-55D1-414F-A3ED-91AE33CF1CB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B137E4EB-CF2D-4A1C-8C3E-F1EF53F0558A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B137E4EB-CF2D-4A1C-8C3E-F1EF53F0558A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B137E4EB-CF2D-4A1C-8C3E-F1EF53F0558A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FE34B1F-55D1-414F-A3ED-91AE33CF1CB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FE34B1F-55D1-414F-A3ED-91AE33CF1CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FE34B1F-55D1-414F-A3ED-91AE33CF1CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FE34B1F-55D1-414F-A3ED-91AE33CF1CB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

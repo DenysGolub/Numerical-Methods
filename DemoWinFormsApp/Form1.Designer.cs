@@ -32,8 +32,6 @@
             function_text = new RichTextBox();
             label2 = new Label();
             label3 = new Label();
-            a_interval = new RichTextBox();
-            b_interval = new RichTextBox();
             label4 = new Label();
             epsilon = new RichTextBox();
             answers = new RichTextBox();
@@ -46,6 +44,8 @@
             button1 = new Button();
             label6 = new Label();
             label1 = new Label();
+            b_interval = new RichTextBox();
+            a_interval = new RichTextBox();
             SuspendLayout();
             // 
             // formsPlot1
@@ -58,6 +58,7 @@
             // 
             // function_text
             // 
+            function_text.Font = new Font("Segoe UI", 12F);
             function_text.Location = new Point(817, 83);
             function_text.Name = "function_text";
             function_text.Size = new Size(204, 35);
@@ -78,33 +79,17 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label3.Location = new Point(865, 137);
+            label3.Location = new Point(867, 137);
             label3.Name = "label3";
             label3.Size = new Size(38, 28);
             label3.TabIndex = 1;
             label3.Text = "b=";
             // 
-            // a_interval
-            // 
-            a_interval.Location = new Point(799, 137);
-            a_interval.Name = "a_interval";
-            a_interval.Size = new Size(68, 30);
-            a_interval.TabIndex = 3;
-            a_interval.Text = "";
-            // 
-            // b_interval
-            // 
-            b_interval.Location = new Point(896, 137);
-            b_interval.Name = "b_interval";
-            b_interval.Size = new Size(71, 30);
-            b_interval.TabIndex = 3;
-            b_interval.Text = "";
-            // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label4.Location = new Point(973, 137);
+            label4.Location = new Point(984, 137);
             label4.Name = "label4";
             label4.Size = new Size(35, 28);
             label4.TabIndex = 1;
@@ -112,9 +97,10 @@
             // 
             // epsilon
             // 
-            epsilon.Location = new Point(1006, 140);
+            epsilon.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            epsilon.Location = new Point(1017, 134);
             epsilon.Name = "epsilon";
-            epsilon.Size = new Size(103, 30);
+            epsilon.Size = new Size(117, 34);
             epsilon.TabIndex = 3;
             epsilon.Text = "0.01";
             // 
@@ -227,11 +213,31 @@
             label1.TabIndex = 1;
             label1.Text = "F(x)=";
             // 
+            // b_interval
+            // 
+            b_interval.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            b_interval.Location = new Point(901, 135);
+            b_interval.Name = "b_interval";
+            b_interval.Size = new Size(83, 34);
+            b_interval.TabIndex = 8;
+            b_interval.Text = "";
+            // 
+            // a_interval
+            // 
+            a_interval.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            a_interval.Location = new Point(797, 137);
+            a_interval.Name = "a_interval";
+            a_interval.Size = new Size(70, 34);
+            a_interval.TabIndex = 9;
+            a_interval.Text = "";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1139, 696);
+            ClientSize = new Size(1146, 696);
+            Controls.Add(a_interval);
+            Controls.Add(b_interval);
             Controls.Add(button1);
             Controls.Add(radioNewton);
             Controls.Add(radioPF);
@@ -240,8 +246,6 @@
             Controls.Add(radioChord);
             Controls.Add(answers);
             Controls.Add(epsilon);
-            Controls.Add(b_interval);
-            Controls.Add(a_interval);
             Controls.Add(function_text);
             Controls.Add(label1);
             Controls.Add(label6);
@@ -252,6 +256,7 @@
             Controls.Add(formsPlot1);
             Name = "Form1";
             Text = "Розв'язання функціональних рівнянь із однією змінною F(x)=0";
+            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -262,8 +267,6 @@
         private RichTextBox function_text;
         private Label label2;
         private Label label3;
-        private RichTextBox a_interval;
-        private RichTextBox b_interval;
         private Label label4;
         private RichTextBox epsilon;
         private RichTextBox answers;
@@ -276,5 +279,7 @@
         private Button button1;
         private Label label6;
         private Label label1;
+        private RichTextBox b_interval;
+        private RichTextBox a_interval;
     }
 }
