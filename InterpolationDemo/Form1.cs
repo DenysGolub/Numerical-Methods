@@ -1,10 +1,10 @@
 using ScottPlot;
 using NCalc;
-using Point = ConsoleApp1.Point;
-using ConsoleApp1;
 using System.Diagnostics;
 using ScottPlot.Plottables;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using NumericalMethods;
+using Point = NumericalMethods.Point;
 namespace InterpolationDemo
 {
     public partial class Form1 : Form
@@ -89,45 +89,7 @@ namespace InterpolationDemo
             {
                 difY[i] = Math.Abs(YiL[i] - YiS[i]);
             }
-            ScottPlot.Plottables.Scatter MyScatterSpline = diff_plot.Plot.Add.Scatter(difX, difY);
-        }
-
-        private void SplinePoints(double[] x_points, Dictionary<string, string> splineFormulas, double h = 0.2)
-        {
-            /* var x_values = new List<double>();
-             var y_values = new List<double>();
-             for(int formula_number = 0; formula_number<splineFormulas.Count; formula_number++)
-             {
-                 if(formula_number+1<splineFormulas.Count)
-                 {
-
-
-                     Func<double, double> function = (x) =>
-                     {
-                         string x_str = x.ToString().Replace(',', '.');
-                         string spline = splineFormulas.ElementAt(0).Value;
-                         Debug.WriteLine(spline.Replace(",", "."));
-
-                         string eval = spline.Replace("x", x_str);
-
-                         var expr = new Expression(eval.Replace(",", "."));
-
-                         return double.Parse(expr.Evaluate().ToString());
-                     };
-                     double a = x_points[0];
-                     double b = x_points[1];
-                     for (double start = a; start <= b; start += h)
-                     {
-                         x_values.Add(start);
-                         y_values.Add(function(start));
-                     }
-                 }
-
-             }*/
-
-
-
-
+            ScottPlot.Plottables.Scatter diffScatter = diff_plot.Plot.Add.Scatter(difX, difY);
         }
 
         private void GetXYArrayLagrange(Point[] data, out double[] x_arr, out double[] y_arr)
@@ -193,11 +155,6 @@ namespace InterpolationDemo
                     max = data[i].X;
                 }
             }
-        }
-
-        private void graph_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e)

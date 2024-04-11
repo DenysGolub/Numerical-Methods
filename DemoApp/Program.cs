@@ -52,13 +52,13 @@ namespace DemoApp
             LU lu = new LU();
             var b = lu.Solve(system);
 
-            var decompos = LU.Decompose(lu.GetMatrixWithoutVector(system));
+            var decompos = LU.Decompose(LinearSystem.GetMatrixWithoutVector(system));
             ///AX=B => LUX=B
             ///LY=B => Y
             ///UX=Y => X
             Zeidel zeidel = new Zeidel();
             zeidel.Epsilon = 0.00000000000001;
-            var Y = zeidel.Solve(zeidel.MergeToSLAR(decompos.L, zeidel.GetVectorB(system)));
+            var Y = zeidel.Solve(LinearSystem.MergeToSLAR(decompos.L, LinearSystem.GetVectorB(system)));
             //var X = zeidel.Solve(zeidel.MergeToSLAR(decompos.U, Y.ToArray()));
 
             double[,] array_b = new double[Y.Count, 1];
@@ -67,7 +67,7 @@ namespace DemoApp
             {
                 array_b[x, 0] = Y.ElementAt(i).Value;
             }
-            var X = zeidel.Solve(zeidel.MergeToSLAR(decompos.U, array_b));
+            var X = zeidel.Solve(LinearSystem.MergeToSLAR(decompos.U, array_b));
 
         }
     }

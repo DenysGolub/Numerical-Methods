@@ -14,4 +14,8 @@
     <PackageReference Include="ScottPlot.WinForms" Version="5.0.23" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NumericalMethods\NumericalMethods.csproj" />
+  </ItemGroup>
+
 </Project>

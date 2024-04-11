@@ -62,7 +62,6 @@
             graph.Name = "graph";
             graph.Size = new Size(916, 652);
             graph.TabIndex = 0;
-            graph.Load += graph_Load;
             // 
             // lagrange_textbox
             // 
